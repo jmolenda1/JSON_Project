@@ -55,3 +55,4 @@ offline.plot(fig,filename='global_earthquakes.html')
 json.dump(eq_data, outfile, indent=4)
 
 print(eq_data['features'][0]['properties']['mag'])
+
