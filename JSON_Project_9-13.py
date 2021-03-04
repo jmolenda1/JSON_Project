@@ -2,6 +2,8 @@ import json
 
 infile = open('US_fires_9_14.json', 'r')
 
+
+
 wildfire_data = json.load(infile)
 
 list_of_wildfires = wildfire_data
