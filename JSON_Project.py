@@ -4,9 +4,7 @@ infile = open('US_fires_9_1.json', 'r')
 
 wildfire_data = json.load(infile)
 
-json.dump(wildfire_data,outfile,indent=4)
-
-list_of_wildfires = wildfire_data['']
+list_of_wildfires = wildfire_data
 
 lons = []
 lats = []
@@ -16,9 +14,10 @@ for wf in list_of_wildfires:
     lon = wf['longitude']
     lat = wf['latitude']
     bright = wf['brightness']
-    lons.append(lon)
-    lats.append(lat)
-    brights.append(bright)
+    if wf['brightness']>=450:
+        lons.append(lon)
+        lats.append(lat)
+        brights.append(bright)
 
 
 print(brights[:10])
@@ -32,19 +31,17 @@ data = [{
     'type': 'scattergeo',
     'lon': lons,
     'lat': lats,
-    'bright': brights,
-    'text':hover_texts,
     'marker':{
-        'size':[5*mag for mag in mags],
-        'color':mags,
+        'size':[5*bright for bright in brights],
+        'color':brights,
         'colorscale':'Viridis',
         'reversescale':True,
-        'colorbar':{'title':'Magnitude'}
+        'colorbar':{'title':'Brightness'}
     }
 }]
-my_layout = Layout(title='Global Earthquakes')
+my_layout = Layout(title='California Wildfires')
 
 fig = {'data':data, 'layout':my_layout}
 
-offline.plot(fig,filename='global_earthquakes.html')
+offline.plot(fig,filename='California_Wildfires.html')
 
